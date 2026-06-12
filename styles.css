@@ -15,7 +15,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
-html, body { overflow-x: clip; }
+html, body { overflow-x: hidden; overflow-x: clip; }
 
 body {
   background: var(--cream);
@@ -25,8 +25,18 @@ body {
   line-height: 1.65;
 }
 
-img { display: block; max-width: 100%; }
+img { display: block; max-width: 100%; height: auto; }
 a { color: var(--green-dark); }
+
+/* Cross-browser cropped image frames (Safari mis-sizes aspect-ratio + height:100% combos) */
+.frame { position: relative; overflow: hidden; }
+.frame > img {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 h1, h2, h3, .nav-logo span, .footer-logo span { font-family: var(--font-serif); font-weight: 400; }
 
@@ -170,11 +180,10 @@ h1, h2, h3, .nav-logo span, .footer-logo span { font-family: var(--font-serif); 
 @keyframes rise { to { transform: translateY(0); } }
 .hero-sub { max-width: 46ch; margin-bottom: 28px; }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; }
-.hero-media img {
+.hero-media {
   border-radius: 200px 200px var(--radius) var(--radius);
   box-shadow: var(--shadow);
-  aspect-ratio: 4 / 4.6;
-  object-fit: cover;
+  padding-top: 115%;
 }
 
 /* ---------- Marquee ---------- */
@@ -222,11 +231,10 @@ h1, h2, h3, .nav-logo span, .footer-logo span { font-family: var(--font-serif); 
   gap: clamp(32px, 5vw, 70px);
   align-items: center;
 }
-.about-media img {
+.about-media {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  padding-top: 125%;
 }
 .about-copy p { margin-bottom: 16px; }
 .about-catering { font-weight: 600; }
@@ -247,7 +255,7 @@ h1, h2, h3, .nav-logo span, .footer-logo span { font-family: var(--font-serif); 
   transition: transform .3s ease, box-shadow .3s ease;
 }
 .prod-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
-.prod-card img { aspect-ratio: 16 / 10; object-fit: cover; }
+.prod-thumb { padding-top: 62.5%; }
 .prod-card h3 { font-size: 23px; padding: 18px 22px 4px; }
 .prod-card p { padding: 0 22px 22px; font-size: 15.5px; color: #5a624f; }
 
@@ -282,10 +290,9 @@ h1, h2, h3, .nav-logo span, .footer-logo span { font-family: var(--font-serif); 
 .space-media { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .space-media figure {
   border-radius: var(--radius);
-  overflow: hidden;
   box-shadow: var(--shadow);
+  padding-top: 146%;
 }
-.space-media img { aspect-ratio: 3 / 4.4; object-fit: cover; height: 100%; }
 .space-media figure:nth-child(2) { margin-top: 36px; }
 
 /* ---------- Band ---------- */
@@ -355,9 +362,9 @@ h1, h2, h3, .nav-logo span, .footer-logo span { font-family: var(--font-serif); 
   .hero-inner, .about-grid, .space-grid, .contact-grid { grid-template-columns: 1fr; }
   .prod-grid { grid-template-columns: repeat(2, 1fr); }
   .gal-grid { columns: 3; }
-  .hero-media img { aspect-ratio: 16 / 11; }
-  .about-media img { aspect-ratio: 16 / 10; }
-  .space-media img { aspect-ratio: 3 / 3.6; }
+  .hero-media { padding-top: 70%; }
+  .about-media { padding-top: 62.5%; }
+  .space-media figure { padding-top: 120%; }
 }
 
 @media (max-width: 720px) {
